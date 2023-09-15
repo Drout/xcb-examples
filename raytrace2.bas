@@ -76,11 +76,8 @@ Sub FollowRay (j As int, i As byte)
         n=0
     end if
     For k = 0 To SpheresCount -1
-        rem to_sphere.X = Spheres(k).Center.X - Pos.X : to_sphere.Y = Spheres(k).Center.Y - Pos.Y : to_sphere.Z = Spheres(k).Center.Z - Pos.Z
         to_sphere = SubtractVector(Spheres(k).Center , Pos)
-        rem pp = to_sphere.X * to_sphere.X + to_sphere.Y * to_sphere.Y + to_sphere.Z * to_sphere.Z
         pp = Vector3Dot(to_sphere, to_sphere) 
-        rem sc = to_sphere.X * Ray.X + to_sphere.Y * Ray.Y + to_sphere.Z * Ray.Z
         sc = Vector3Dot(to_sphere, Ray)
 
         If sc > 0 Then :rem the angle between to_sphere and ray is between -90 and +90 degrees
@@ -100,12 +97,12 @@ Sub FollowRay (j As int, i As byte)
         Return
     End If
     rem we hit something
-    rem       Ray.X = Ray.X * s : Ray.Y = Ray.Y * s : Ray.Z = Ray.Z * s : dd = dd * s * s 
+
     rem set the ray to the correct length
     Ray = MultVectorByScalar(Ray, s)
     dd = dd * s * s
     rem go where the ray hit
-    rem Pos.X = Pos.X + Ray.X : Pos.Y = Pos.Y + Ray.Y : Pos.Z = Pos.Z + Ray.Z 
+ 
     Pos = AddVector(Pos , Ray)
     If n <> 0 Then          
         rem hit a sphere
@@ -124,7 +121,7 @@ Sub FollowRay (j As int, i As byte)
             v = Spheres(kk).Center.Z - Pos.Z
             If u * u + v * v <= Spheres(kk).Q Then
                 rem we are in the shadow
-                'Call Plot(j, i, MODE_SET) ', Pos.X - floor(Pos.X), Pos.Z - floor(Pos.Z), (u * u + v * v) / Spheres(k).Q * 255)
+                'Call Plot(j, i, MODE_SET) 
                 Return
             End If
         Next kk
@@ -151,15 +148,14 @@ Dim SizeY as int
 SizeX = 320
 SizeY = 200 
    
-    For y as byte = 1 To SizeY - 1 
-        For x as int = 1 To SizeX - 1
+    For y as byte = 0 To SizeY - 1 
+        For x as int = 0 To SizeX - 1
             Pos.x = 0.3
     	    Pos.y = -0.5
 		    Pos.z = 0
             Ray.x = x - SizeX / 2
             Ray.y = y - SizeY / 2
-            Ray.z = SizeX '375
-            rem dd = Ray.X * Ray.X + Ray.Y * Ray.Y + Ray.Z * Ray.Z
+            Ray.z = SizeX 
             dd = Vector3Dot(Ray, Ray) 
             Call FollowRay(x, y)
         Next x
