@@ -159,5 +159,4 @@ SizeY = 200
             dd = Vector3Dot(Ray, Ray) 
             Call FollowRay(x, y)
         Next x
-        'CALL Plot(0, y, MODE_SET)
     Next y
