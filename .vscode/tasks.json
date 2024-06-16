@@ -1,0 +1,64 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Compile XC=BASIC3",
+            "type": "shell",
+            "osx": {
+                "command": "./bin/macOS/xcbasic3",
+                "args": [
+                    "${file}",
+                    "${fileDirname}/${fileBasenameNoExtension}.prg"
+                ]
+            },
+            "linux": {
+                "command": "./bin/Linux/xcbasic3",
+                "args": [
+                    "${file}",
+                    "${fileDirname}/${fileBasenameNoExtension}.prg"
+                ]
+            },
+            "windows": {
+                "command": "./bin/Windows/xcbasic3.exe",
+                "args": [
+                    "${file}",
+                    "${fileDirname}\\${fileBasenameNoExtension}.prg",
+                    "--dasm=C:\\Util\\dasm-2.20.14.1-win-x64\\dasm.exe"
+                ]
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": false
+            },
+            "options": {
+                "cwd": "${config:xcbasic3.basefolder}"
+            }
+        },
+        {
+            "label": "Vice XC=BASIC3",
+            "type": "shell",
+            "osx": {
+                "command": "open",
+                "args": [
+                    "${fileBasenameNoExtension}.prg"
+                ]
+            },
+            "windows": {
+                "command": "${config:xcbasic3.vice}/bin/x64sc.exe",
+                "args": [
+                    "${fileBasenameNoExtension}.prg"
+                ]
+            },
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "Compile XC=BASIC3"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}
