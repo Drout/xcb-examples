@@ -1,4 +1,5 @@
-rem INCLUDE "lib_gfx.bas"
+OPTION TARGET = "cplus4"
+
 TYPE Vector3
  x as FLOAT
  y as FLOAT
@@ -57,7 +58,7 @@ SUB Plot (X as int, Y as byte) STATIC
 	MEM = SCRBASE + floor(Y/8) * 320 + floor(X/8) * 8 + (Y AND 7)
 	PX = 7 - (X AND 7)
 	POKE MEM, PEEK(MEM) OR POW(2,PX)
-	PRINT MEM, PEEK(MEM) OR POW(2,PX)
+	'PRINT MEM, PEEK(MEM) OR POW(2,PX)
 END SUB
 
 for k as byte = 0 to 1
@@ -143,16 +144,9 @@ Sub FollowRay (j As int, i As byte)
     Return
 End Sub
 	
-	
 REM INITIALIZE BITMAP MODE
 
 SCRBASE = $6000
-
-'poke $FF12, (peek($FF12) and 215) or 32 ' hires at $4000, 215= 1100 0111 clear bit 4 5 6 and set bit 5
-
-'poke $FF14, (peek($FF14) and 7) or $3C   '0011 1100 0000 0000  '0011 1100
-
-'poke $FF06, peek($FF06) or 32
 
 REM init screen
 ASM
