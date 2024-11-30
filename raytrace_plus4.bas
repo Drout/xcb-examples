@@ -48,7 +48,6 @@ FUNCTION Vector3Dot as float ( p1 as Vector3, p2 as Vector3) STATIC
  return p1.x * p2.x + p1.y * p2.y + p1.z * p2.z
 END FUNCTION
 
-dim SCRBASE as word
 Dim ROWOFFSET as word
 dim Spheres(2) as sphere @spheredata 
 
@@ -147,7 +146,7 @@ End Sub
 	
 REM INITIALIZE BITMAP MODE
 
-SCRBASE = $6000
+CONST SCRBASE = $6000
 
 REM init screen
 ASM
@@ -184,8 +183,8 @@ memset SCRBASE,8000,0   'clear bitmap area
 'poke $ff15, 1
 'poke $ff19, 1
 
-Dim SizeX as int
-Dim SizeY as int
+Dim SizeX as int 
+Dim SizeY as int '  doesn't work as byte
 
 SizeX = 320
 SizeY = 200 
