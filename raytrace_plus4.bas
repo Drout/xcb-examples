@@ -49,16 +49,17 @@ FUNCTION Vector3Dot as float ( p1 as Vector3, p2 as Vector3) STATIC
 END FUNCTION
 
 dim SCRBASE as word
+Dim ROWOFFSET as word
 dim Spheres(2) as sphere @spheredata 
 
 SUB Plot (X as int, Y as byte) STATIC
 	Dim MEM as word
 	Dim px as byte
 	REM PLOT PIXEL
-	MEM = SCRBASE + floor(Y/8) * 320 + floor(X/8) * 8 + (Y AND 7)
+	'MEM = SCRBASE + floor(Y/8) * 320 + floor(X/8) * 8 + (Y AND 7)
+    MEM = ROWOFFSET + floor(X/8) * 8
 	PX = 7 - (X AND 7)
 	POKE MEM, PEEK(MEM) OR POW(2,PX)
-	'PRINT MEM, PEEK(MEM) OR POW(2,PX)
 END SUB
 
 for k as byte = 0 to 1
@@ -185,10 +186,12 @@ memset SCRBASE,8000,0   'clear bitmap area
 
 Dim SizeX as int
 Dim SizeY as int
+
 SizeX = 320
 SizeY = 200 
    
     For y as byte = 0 To SizeY - 1 
+        ROWOFFSET =  SCRBASE + floor(y/8) * 320 + (y AND 7)
         For x as int = 0 To SizeX - 1
             Pos.x = 0.3
     	    Pos.y = -0.5

@@ -14,7 +14,7 @@ END SUB
 
 REM INITIALIZE BITMAP MODE
 
-SCRBASE = $8000
+SCRBASE = $6000
 
 'poke $FF12, (peek($FF12) and 215) or 32 ' hires at $4000, 215= 1100 0111 clear bit 4 5 6 and set bit 5
 
@@ -27,8 +27,8 @@ ASM
     lda $ff06
     ora #$20 ; enable bitmap mode
     sta $ff06
-    ;lda #$d8 ; bitmap at $6000
-    lda #$e0 ; bitmap at $8000
+    lda #$d8 ; bitmap at $6000
+    ;lda #$e0 ; bitmap at $8000
     ;lda #$e8 ; bitmap at $A000
     sta $ff12
     lda #$40 ; color/luma screen at $4000
@@ -64,9 +64,9 @@ SizeX = 320
 SizeY = 200 
    
     For y as byte = 0 To 200
-        'For x as int = 0 To 100
-            CALL Plot(y,y)
-        'Next x
+        For x as int = 0 To 100
+          if x=y then CALL Plot(y,y)
+        Next x
     Next y
 
 DIM A$ as string *1  
