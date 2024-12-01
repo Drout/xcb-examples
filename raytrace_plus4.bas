@@ -51,7 +51,8 @@ END FUNCTION
 Dim ROWOFFSET as word
 dim Spheres(2) as sphere @spheredata 
 
-SUB Plot (X as int, Y as byte) STATIC
+'SUB Plot (X as int, Y as byte) STATIC
+SUB Plot (X as int) STATIC
 	Dim MEM as word
 	Dim px as byte
 	REM PLOT PIXEL
@@ -138,7 +139,8 @@ Sub FollowRay (j As int, i As byte)
         Next kk
         rem checker tile
         If ((Pos.X - floor(Pos.X)) > 0.5) <> ((Pos.Z - floor(Pos.Z)) > 0.5) Then
-            Call PLOT(j, i)
+            'Call PLOT(j, i)
+            Call PLOT(j)
         End If
     End If
     Return

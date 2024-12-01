@@ -23,6 +23,7 @@
             "windows": {
                 "command": "./bin/Windows/xcbasic3.exe",
                 "args": [
+             
                     "${file}",
                     "${fileDirname}\\${fileBasenameNoExtension}.prg",
                     "--dasm=C:\\Util\\dasm-2.20.14.1-win-x64\\dasm.exe"
