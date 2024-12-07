@@ -26,7 +26,8 @@
              
                     "${file}",
                     "${fileDirname}\\${fileBasenameNoExtension}.prg",
-                    "--dasm=C:\\Util\\dasm-2.20.14.1-win-x64\\dasm.exe"
+                    "--dasm=C:\\Util\\dasm-2.20.14.1-win-x64\\dasm.exe"//,
+                 //   "--optimize=false"
                 ]
             },
             "group": {

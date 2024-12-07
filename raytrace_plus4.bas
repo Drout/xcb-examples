@@ -49,7 +49,8 @@ FUNCTION Vector3Dot as float ( p1 as Vector3, p2 as Vector3) STATIC
 END FUNCTION
 
 Dim ROWOFFSET as word
-dim Spheres(2) as sphere @spheredata 
+Const SpheresCount = 2
+dim Spheres(SpheresCount) as sphere @spheredata 
 
 'SUB Plot (X as int, Y as byte) STATIC
 SUB Plot (X as int) STATIC
@@ -62,7 +63,7 @@ SUB Plot (X as int) STATIC
 	POKE MEM, PEEK(MEM) OR POW(2,PX)
 END SUB
 
-for k as byte = 0 to 1
+for k as byte = 0 to SpheresCount-1
  spheres(k).q = spheres(k).r * spheres(k).r
 next k
 
@@ -70,7 +71,6 @@ spheredata:
  data as float -0.3, -0.8, 3, 0.6 , 0
  data as float 0.9, -1.1, 2, 0.2 , 0 
 
-Const SpheresCount = 2
 Dim pp As float
 
 Dim to_sphere As Vector3, Ray As Vector3
@@ -81,13 +81,16 @@ Dim aa As float, bb As float, dd As float, sc As float
 Dim normv As Vector3
 
 Sub FollowRay (j As int, i As byte)
+Dim kk as byte
     s=0
     n=-1
     if not ((Pos.Y >= 0) Or (Ray.Y <= 0)) Then 
         s = -Pos.Y / Ray.Y
         n=0
     end if
-    For k = 0 To SpheresCount -1
+    k=0
+    'For k = 0 To SpheresCount -1
+    Do
         to_sphere = SubtractVector(Spheres(k).Center , Pos)
         pp = Vector3Dot(to_sphere, to_sphere) 
         sc = Vector3Dot(to_sphere, Ray)
@@ -103,7 +106,9 @@ Sub FollowRay (j As int, i As byte)
                 End If 
             End If
         End If
-    Next k
+        k = k + 1
+    Loop Until k=SpheresCount
+    'Next k
     If n < 0 Then       :rem we hit nothing (so it's the sky)
         'Call Plot(j, i, MODE_SET)
         Return
@@ -128,7 +133,9 @@ Sub FollowRay (j As int, i As byte)
     Else
         rem we hit the floor - finally!            
         rem check the shadows
-        For kk as byte = 0 To SpheresCount-1
+        kk=0
+        'For kk as byte = 0 To SpheresCount-1
+        Do
             u = Spheres(kk).Center.X - Pos.X 
             v = Spheres(kk).Center.Z - Pos.Z
             If u * u + v * v <= Spheres(kk).Q Then
@@ -136,7 +143,9 @@ Sub FollowRay (j As int, i As byte)
                 'Call Plot(j, i, MODE_SET) 
                 Return
             End If
-        Next kk
+            kk = kk + 1
+        Loop until kk=SpheresCount
+        'Next kk
         rem checker tile
         If ((Pos.X - floor(Pos.X)) > 0.5) <> ((Pos.Z - floor(Pos.Z)) > 0.5) Then
             'Call PLOT(j, i)
