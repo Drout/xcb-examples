@@ -157,17 +157,19 @@ End Sub
 	
 REM INITIALIZE BITMAP MODE
 
-CONST SCRBASE = $6000
+CONST SCRBASE = $4000
 
 REM init screen
 ASM
     lda $ff06
     ora #$20 ; enable bitmap mode
     sta $ff06
-    lda #$d8 ; bitmap at $6000
+    lda #$d0 ; bitmap at $4000
+    ;lda #$d8 ; bitmap at $6000
     ;lda #$e8 ; bitmap at $A000
     sta $ff12
-    lda #$40 ; color/luma screen at $4000
+    ;lda #$40 ; color/luma screen at $4000
+    lda #$60 ; color/luma screen at $6000
     sta $ff14
 end ASM 
 
@@ -176,15 +178,15 @@ ASM
     ldx #0
 loop1:
     lda #$70
-    sta $4000,x
-    sta $4100,x
-    sta $4200,x
-    sta $4300,x
+    sta $6000,x
+    sta $6100,x
+    sta $6200,x
+    sta $6300,x
     lda #$01
-    sta $4400,x
-    sta $4500,x
-    sta $4600,x
-    sta $4700,x
+    sta $6400,x
+    sta $6500,x
+    sta $6600,x
+    sta $6700,x
     inx
     bne loop1
 end ASM
@@ -213,3 +215,6 @@ SizeY = 200
             Call FollowRay(x, y)
         Next x
     Next y
+
+DIM A$ as string *1  
+Input a$
