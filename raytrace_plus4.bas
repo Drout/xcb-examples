@@ -197,8 +197,8 @@ memset SCRBASE,8000,0   'clear bitmap area
 Dim SizeX as int 
 Dim SizeY as int '  doesn't work as byte
 
-CONST SizeX = 320
-CONST SizeY = 200 
+SizeX = 320
+SizeY = 200 
    
     For y as byte = 0 To SizeY - 1 
         ROWOFFSET =  SCRBASE + floor(y/8) * 320 + (y AND 7)
